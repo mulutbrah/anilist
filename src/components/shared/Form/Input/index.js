@@ -1,6 +1,14 @@
+import { useState } from "react";
 import PropTypes from "prop-types";
 
-const FormInput = ({ label, handleChange }) => {
+const FormInput = ({ label, handleChange, value = "" }) => {
+  const [inputValue, setInputValue] = useState(value);
+
+  const handleChangeInputValue = (value) => {
+    setInputValue(value);
+    handleChange(value);
+  };
+
   return (
     <div>
       <label htmlFor={label} className="block py-2">
@@ -13,7 +21,8 @@ const FormInput = ({ label, handleChange }) => {
         type="text"
         placeholder="Search Anime/Manga"
         aria-label="query"
-        onChange={handleChange}
+        onChange={(e) => handleChangeInputValue(e.target.value)}
+        value={inputValue}
       />
     </div>
   );
@@ -22,6 +31,7 @@ const FormInput = ({ label, handleChange }) => {
 FormInput.propTypes = {
   handleChange: PropTypes.func,
   label: PropTypes.string,
+  value: PropTypes.string,
 };
 
 export default FormInput;

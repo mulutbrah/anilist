@@ -4,7 +4,7 @@ import Card from "./Card";
 
 const CardList = ({ title = "", list = [] }) => {
   return (
-    <div className="mt-10">
+    <div className="mt-5">
       {title !== "" && (
         <h1 className="text-xl font-semibold filter drop-shadow-sm">
           <span className="text-xl font-semibold filter drop-shadow-sm tracking-wide">

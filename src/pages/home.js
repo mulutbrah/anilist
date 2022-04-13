@@ -18,8 +18,8 @@ const Home = () => {
     popular: [],
   });
 
-  const handleSearch = (e) => {
-    navigate(`/search?q=${e.target.value}`);
+  const handleSearch = (value) => {
+    navigate(`/search?q=${value}`);
   };
 
   const debouncedSearch = useMemo(() => {
