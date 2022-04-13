@@ -13,6 +13,7 @@ import { queryPopular, queryTrending } from "../constant/query";
 
 const Home = () => {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   const [list, setList] = useState({
     trending: [],
     popular: [],
@@ -33,16 +34,24 @@ const Home = () => {
     };
 
     const getMedia = async (key, query) => {
-      const result = await MediaApi.get({
-        query,
-        variables,
-      });
+      try {
+        setLoading(true);
 
-      const res = result.data.data.Page.media.filter((a) => {
-        return a.isAdult === false;
-      });
+        const result = await MediaApi.get({
+          query,
+          variables,
+        });
 
-      setList((prevState) => ({ ...prevState, [key]: res }));
+        const res = result.data.data.Page.media.filter((a) => {
+          return a.isAdult === false;
+        });
+
+        setList((prevState) => ({ ...prevState, [key]: res }));
+      } catch {
+        //
+      } finally {
+        setLoading(false);
+      }
     };
 
     getMedia("trending", queryTrending);
@@ -55,8 +64,12 @@ const Home = () => {
     <Container>
       <FormInput label="Search" handleChange={debouncedSearch} />
 
-      <CardList title="Trending Now" list={list.trending} />
-      <CardList title="All Time Popular" list={list.popular} />
+      <CardList title="Trending Now" list={list.trending} loading={loading} />
+      <CardList
+        title="All Time Popular"
+        list={list.popular}
+        loading={loading}
+      />
     </Container>
   );
 };

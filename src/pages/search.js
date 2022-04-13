@@ -13,6 +13,8 @@ import MediaApi from "../services/media";
 import { queryPopular, queryTrending, querySearch } from "../constant/query";
 
 const Search = () => {
+  const [loading, setLoading] = useState(false);
+
   const search = useLocation().search;
   const q = new URLSearchParams(search).get("q");
 
@@ -42,14 +44,22 @@ const Search = () => {
     };
 
     const getMedia = async (key, query) => {
-      const result = await MediaApi.get({
-        query,
-        variables,
-      });
+      try {
+        setLoading(true);
 
-      const res = result.data.data.Page.media;
+        const result = await MediaApi.get({
+          query,
+          variables,
+        });
 
-      setList((prevState) => ({ ...prevState, [key]: res }));
+        const res = result.data.data.Page.media;
+
+        setList((prevState) => ({ ...prevState, [key]: res }));
+      } catch {
+        //
+      } finally {
+        setLoading(false);
+      }
     };
 
     if (query) {
@@ -68,11 +78,19 @@ const Search = () => {
       {query && <p className="mt-5">Search: {query}</p>}
 
       {query ? (
-        <CardList list={list.search} />
+        <CardList list={list.search} loading={loading} />
       ) : (
         <>
-          <CardList title="Trending Now" list={list.trending} />
-          <CardList title="All Time Popular" list={list.popular} />
+          <CardList
+            title="Trending Now"
+            list={list.trending}
+            loading={loading}
+          />
+          <CardList
+            title="All Time Popular"
+            list={list.popular}
+            loading={loading}
+          />
         </>
       )}
     </Container>
