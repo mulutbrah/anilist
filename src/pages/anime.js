@@ -37,7 +37,7 @@ const Anime = () => {
     };
 
     getMedia(queryDetail);
-  }, []);
+  }, [id]);
 
   return (
     <div>
