@@ -1,0 +1,17 @@
+.section-banner-and-title {
+  background-color: #fff;
+
+  &__detail {
+    margin: 0 auto;
+    width: 90%;
+
+    .cover-image {
+      margin-top: -100px;
+      width: 20%;
+    }
+
+    .copywriting {
+      width: 80%;
+    }
+  }
+}
