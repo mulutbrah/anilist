@@ -54,7 +54,7 @@ const Search = () => {
   return (
     <Container className="py-5">
       <FormInput label="Search" value={query} handleChange={debouncedSearch} />
-      <p className="mt-5">Result for "{query}"</p>
+      {query !== "" && <p className="mt-5">Search: {query}"</p>}
       <CardList list={list} />
     </Container>
   );
