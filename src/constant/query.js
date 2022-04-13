@@ -78,6 +78,36 @@ query ($page: Int, $perPage: Int, $search: String) {
     }
 }`;
 
+export const TOP_100 = `
+query ($page: Int, $perPage: Int) {
+    Page (page: $page, perPage: $perPage) {
+      pageInfo {
+        total
+        perPage
+      }
+      media (type: ANIME, sort: SCORE_DESC){
+        id
+        coverImage {
+            medium
+        }
+        title {
+          romaji
+          english
+          native
+        }
+        genres
+        format
+        averageScore
+        popularity
+        duration
+        status
+        season
+        seasonYear
+        isAdult
+      }
+    }
+  }`;
+
 export const queryDetail = `query ($id: Int) {
     Media (id: $id) {
       id
