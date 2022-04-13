@@ -10,7 +10,7 @@ import FormInput from "../components/shared/Form/Input";
 
 import MediaApi from "../services/media";
 
-import { querySearch } from "../constant/query";
+import { queryPopular, queryTrending, querySearch } from "../constant/query";
 
 const Search = () => {
   const search = useLocation().search;
@@ -18,7 +18,11 @@ const Search = () => {
 
   const [query, setQuery] = useQueryParams("q", q);
 
-  const [list, setList] = useState([]);
+  const [list, setList] = useState({
+    trending: [],
+    popular: [],
+    search: [],
+  });
 
   const handleSearch = (value) => {
     const searchValue = value.trim();
@@ -37,7 +41,7 @@ const Search = () => {
       perPage: 20,
     };
 
-    const getMedia = async (query) => {
+    const getMedia = async (key, query) => {
       const result = await MediaApi.get({
         query,
         variables,
@@ -45,17 +49,32 @@ const Search = () => {
 
       const res = result.data.data.Page.media;
 
-      setList(res);
+      setList((prevState) => ({ ...prevState, [key]: res }));
     };
 
-    getMedia(querySearch);
+    if (query) {
+      getMedia("search", querySearch);
+    } else {
+      getMedia("trending", queryTrending);
+      getMedia("popular", queryPopular);
+    }
+
+    return () => setList({ trending: [], popular: [], search: [] });
   }, [query]);
 
   return (
     <Container className="py-5">
       <FormInput label="Search" value={query} handleChange={debouncedSearch} />
-      {query !== "" && <p className="mt-5">Search: {query}"</p>}
-      <CardList list={list} />
+      {query && <p className="mt-5">Search: {query}</p>}
+
+      {query ? (
+        <CardList list={list.search} />
+      ) : (
+        <>
+          <CardList title="Trending Now" list={list.trending} />
+          <CardList title="All Time Popular" list={list.popular} />
+        </>
+      )}
     </Container>
   );
 };
