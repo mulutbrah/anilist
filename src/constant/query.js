@@ -97,6 +97,7 @@ query ($page: Int, $perPage: Int) {
         }
         genres
         format
+        episodes
         averageScore
         popularity
         duration

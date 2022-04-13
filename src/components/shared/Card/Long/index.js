@@ -3,6 +3,8 @@ import PropTypes from "prop-types";
 
 import { capitalize } from "lodash";
 
+import { minutesToHms } from "../../../../utils/index";
+
 import "./style.scss";
 
 const CardLong = ({ data }) => {
@@ -10,7 +12,7 @@ const CardLong = ({ data }) => {
     <div className="card-long">
       <Link to={`/anime/${data.id}`}>
         <div className="flex items-center justify-between px-2 py-2">
-          <div className="flex items-center">
+          <div className="card-long__left flex items-center">
             <img
               className="w-full object-cover"
               src={data.coverImage.medium}
@@ -32,20 +34,24 @@ const CardLong = ({ data }) => {
             </div>
           </div>
 
-          <div className="flex">
-            <div>
+          <div className="card-long__right flex">
+            <div className="left">
               <p className="text-gray-600 font-medium">{data.averageScore}%</p>
               <p>{data.popularity} users</p>
             </div>
 
-            <div className="ml-4">
+            <div className="mid ml-4">
               <p className="text-gray-600 font-medium capitalize">
                 {capitalize(data.format)}
               </p>
-              <p>{data.duration}</p>
+              <p>
+                {data.format === "MOVIE"
+                  ? minutesToHms(data.duration)
+                  : data.episodes + " episodes"}
+              </p>
             </div>
 
-            <div className="ml-4 capitalize">
+            <div className="right ml-4 capitalize">
               <p className="text-gray-600 font-medium">
                 {capitalize(data.season)} {capitalize(data.seasonYear)}
               </p>
