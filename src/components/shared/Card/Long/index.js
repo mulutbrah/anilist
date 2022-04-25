@@ -28,7 +28,9 @@ const CardLong = ({ data }) => {
 
               <div className="genres mt-2">
                 {data.genres.map((genre) => (
-                  <div className="genre">{genre}</div>
+                  <Link to={`/genre/${genre.toLowerCase()}`}>
+                    <div className="genre">{genre}</div>
+                  </Link>
                 ))}
               </div>
             </div>

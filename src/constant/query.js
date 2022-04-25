@@ -123,3 +123,34 @@ export const queryDetail = `query ($id: Int) {
       }
     }
 }`;
+
+export const GET_GENRE = `
+query GetGenre($page: Int, $perPage: Int, $genre: String) {
+    Page (page: $page, perPage: $perPage) {
+      pageInfo {
+        total
+        perPage
+      }
+      media (genre: $genre,type: ANIME, sort: SCORE_DESC){
+        id
+        coverImage {
+            medium
+        }
+        title {
+          romaji
+          english
+          native
+        }
+        genres
+        format
+        episodes
+        averageScore
+        popularity
+        duration
+        status
+        season
+        seasonYear
+        isAdult
+      }
+    }
+  }`;

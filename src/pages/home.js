@@ -23,6 +23,10 @@ const Home = () => {
     popular: [],
     top_100: [],
   });
+  // connst page =useStae({
+  //    page: 1,
+  //     perPage: 5,
+  // })
   console.log("list ", list);
 
   const handleSearch = (value) => {

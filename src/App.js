@@ -4,6 +4,7 @@ import Header from "./components/shared/Header";
 
 import Anime from "./pages/anime";
 import Home from "./pages/home";
+import Genre from "./pages/genre";
 import Search from "./pages/search";
 
 import "./App.css";
@@ -14,6 +15,7 @@ function App() {
       <Header />
 
       <Routes>
+        <Route path="/genre/:name" element={<Genre />} />
         <Route path="/anime/:id" element={<Anime />} />
         <Route path="/search" element={<Search />} />
         <Route path="/" element={<Home />} />
