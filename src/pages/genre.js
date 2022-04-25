@@ -37,6 +37,8 @@ const Genre = () => {
   const handlePagination = (type) => {
     if (type === "next") {
       setBody({ ...body, page: body.page + 1 });
+      getMediaGenre(GET_GENRE);
+
       return;
     }
 
