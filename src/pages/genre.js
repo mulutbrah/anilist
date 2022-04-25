@@ -11,7 +11,6 @@ const Genre = () => {
   let { name } = useParams();
 
   const [list, setGenre] = useState([]);
-  console.log("list ", list);
   const [body, setBody] = useState({
     total: 0,
     perPage: 10,
@@ -19,11 +18,15 @@ const Genre = () => {
   });
 
   const getMediaGenre = async (query) => {
-    const { data } = await MediaApi.get({
-      query,
+    const variables = {
       genre: name,
       page: body.page,
       perPage: body.perPage,
+    };
+
+    const { data } = await MediaApi.get({
+      query,
+      variables,
     });
 
     const res = data.data.Page.media;
@@ -39,7 +42,7 @@ const Genre = () => {
 
     setBody({ ...body, page: body.page - 1 });
 
-    getMediaGenre();
+    getMediaGenre(GET_GENRE);
   };
 
   useEffect(() => {
